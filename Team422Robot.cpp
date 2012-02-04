@@ -176,7 +176,7 @@ public:
 		
 		conveyor->set(stick2->GetY());
 		//increments the counter if a ball enters
-		if ((ball3->GetVoltage() => BALL_SENSOR_THRESHOLD) && (hadBall == false)) {
+		if ((ball3->GetVoltage() >= BALL_SENSOR_THRESHOLD) && (hadBall == false)) {
 			++ballsNumber;
 			hadBall = true;
 		}
@@ -184,17 +184,17 @@ public:
 			hadBall = false;
 		}
 		//raises the ballNumber to 2 if both sensord are activated ant the number is under 2
-		if(((ball3->GetVoltage() => BALL_SENSOR_THRESHOLD) || (ball1->GetVoltage() => BALL_SENSOR_THRESHOLD)) && (ballsNumber < 2)) {
+		if(((ball3->GetVoltage() >= BALL_SENSOR_THRESHOLD) || (ball1->GetVoltage() >= BALL_SENSOR_THRESHOLD)) && (ballsNumber < 2)) {
 			ballsNumber = 2;
 		}
 		//sets the ball count to values determined by data from both sensors
-		if ((ball3->GetVoltage() => BALL_SENSOR_THRESHOLD) && (ball1->GetVoltage() => BALL_SENSOR_THRESHOLD)) {
+		if ((ball3->GetVoltage() >= BALL_SENSOR_THRESHOLD) && (ball1->GetVoltage() >= BALL_SENSOR_THRESHOLD)) {
 			++counter;
 		}
 		if (ballsNumber < 2) {
 			ballsNumber = 2;
 		}
-		if (ballCounter => TRIGGER_ITTERATIONS) {
+		if (ballCounter >= TRIGGER_ITTERATIONS) {
 			ballsNumber = 3;
 			counter = 0
 		}
@@ -210,7 +210,7 @@ public:
 			ballsNumber = 0;
 		}
 		//this sends the driver a message if there are three balls
-		if (ballsNumber = 3) {
+		if (ballsNumber == 3) {
 			SendWarning()//TODO: replace with real function to send mesage to dashboard
 		}
 	}
